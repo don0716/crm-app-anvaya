@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+##  Anvaya CRM – PRD Checklist
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This checklist outlines the essential features, modules, and workflows planned for the Anvaya CRM application. Use this to track progress and ensure key components are delivered as per product scope.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+### 📁 Core Modules
 
-### `npm start`
+- [ ] Lead Management
+  - [ ] Create new lead
+  - [ ] Assign sales agent
+  - [ ] Set lead status, source, tags, priority
+  - [ ] Estimate time to close
+  - [ ] Filter/sort leads
+  - [ ] Update/delete lead
+- [ ] Comments Section
+  - [ ] Add comment to a lead
+  - [ ] Display author & timestamp
+  - [ ] Update/delete comment (optional)
+- [ ] Sales Agent Management
+  - [ ] Create new agent
+  - [ ] View all agents
+  - [ ] Assign agents to leads
+- [ ] Lead Views
+  - [ ] Lead List View
+  - [ ] Lead Details View
+  - [ ] Lead Status View (grouped by status)
+  - [ ] Sales Agent View (grouped by agent)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 📊 Reports & Charts
 
-### `npm test`
+- [ ] Total Leads in Pipeline (bar chart)
+- [ ] Leads Closed Last Week (bar or pie chart)
+- [ ] Leads by Sales Agent (bar chart)
+- [ ] Lead Status Distribution (pie or bar chart)
+- [ ] Charts powered by Chart.js
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+### ⚙️ Filters & Sorting
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [ ] URL-based filters:
+  - [ ] `?status=Qualified`
+  - [ ] `?salesAgent=John`
+  - [ ] `?source=Website`
+  - [ ] Combine filters: `?status=New&salesAgent=Jane`
+- [ ] Sorting:
+  - [ ] Time to Close
+  - [ ] Priority
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🧠 Context Management (useContext)
 
-### `npm run eject`
+- [ ] `LeadContext` – Manage leads, comments, filters
+- [ ] `AgentContext` – Manage sales agents
+- [ ] `ReportContext` – Store/report preprocessed stats
+- [ ] `UIContext` – Sidebar, modal, loading state
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 🧩 UI Layout
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- [ ] Sidebar Navigation
+- [ ] Dashboard Page
+- [ ] Lead List Page
+- [ ] Lead Details Page
+- [ ] Sales Agent Management Page
+- [ ] Reports Page
+- [ ] Add/Edit Modals/Forms
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### 📝 Tags (Lead Categorization)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [ ] Follow-up
+- [ ] High Value
+- [ ] Hot Lead
+- [ ] Cold Lead
+- [ ] Demo Scheduled
+- [ ] Needs Nurturing
+- [ ] VIP
+- [ ] Interested
+- [ ] Do Not Disturb
+- [ ] Budget Confirmed
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+### 🚀 Stretch Goals / Future
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [ ] Auth system (Login, Role-based access)
+- [ ] Activity timeline per lead
+- [ ] Lead reminder notifications
+- [ ] Export to CSV / PDF
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+_This PRD checklist is a living document and will evolve with feature updates and feedback._
