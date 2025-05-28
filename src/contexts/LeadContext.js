@@ -1,9 +1,203 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const LeadContext = createContext();
-const useLead = () => useContext(LeadContext);
-export default useLead;
+const useLeads = () => useContext(LeadContext);
+export default useLeads;
 
 export const LeadProvider = ({ children }) => {
-  return <LeadContext.Provider value="">{children}</LeadContext.Provider>;
+  const backendUrl = `http://localhost:3005`;
+  const [leads, setLeads] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [filteredLeads, setFilteredLeads] = useState([]);
+  const [message, setMessage] = useState("");
+  const [filter, setFilter] = useState({
+    status: "",
+    agentId: "",
+    tags: "",
+    source: "",
+    priority: "",
+    sortBy: "",
+  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage("");
+      setError("");
+    }, 3000);
+  }, [leads, error]);
+
+  const fetchLeads = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${backendUrl}/leads`);
+      if (res.data.length > 0) {
+        setLeads(res.data);
+        setLoading(false);
+      } else {
+        setError("No Leads Found");
+        setLoading(false);
+      }
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
+  useEffect(() => {
+    filterQuery();
+  }, [filter, leads]);
+
+  const addLead = async (newLead) => {
+    setLoading(true);
+    try {
+      const res = await axios.post(`${backendUrl}/leads`, newLead);
+      console.log(res.data.lead);
+      setLoading(false);
+      setMessage("Lead Added Successfully");
+      fetchLeads();
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  const editLead = async (leadId, updatedLead) => {
+    setLoading(true);
+    try {
+      const res = await axios.put(`${backendUrl}/leads/${leadId}`, updatedLead);
+      console.log(res.data);
+
+      setLoading(false);
+      setMessage("Lead Updated Successfully");
+      fetchLeads();
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  const addComment = async (commentData, leadId) => {
+    setLoading(true);
+    try {
+      console.log(commentData);
+      const res = await axios.post(
+        `${backendUrl}/leads/${leadId}/comments`,
+        commentData
+      );
+      console.log(res.data);
+      setMessage("Comment Added!");
+      setLoading(false);
+      fetchLeads();
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  const fetchComments = async (leadId) => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${backendUrl}/leads/${leadId}/comments`);
+      setComments(res.data);
+      setLoading(false);
+    } catch (error) {
+      // setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  const deleteComment = async (commentId, leadId) => {
+    try {
+      const res = await axios.delete(`${backendUrl}/comments/${commentId}`);
+      // console.log(res.data);
+      setComments((prev) =>
+        prev.filter((comment) => comment._id !== commentId)
+      );
+      await fetchComments(leadId);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteLead = async (leadId) => {
+    try {
+      const res = await axios.delete(`${backendUrl}/leads/${leadId}`);
+      if (res.ok) {
+        console.log(res.data);
+        console.log("Success");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const filterQuery = async () => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams();
+      if (filter.status) params.append("status", filter.status);
+      if (filter.agentId) params.append("salesAgent", filter.agentId);
+      if (filter.source) params.append("source", filter.source);
+      if (filter.tags) params.append("tags", filter.tags);
+      if (filter.priority) params.append("priority", filter.priority);
+      if (filter.sortBy) params.append("sortBy", filter.sortBy);
+
+      const response = await axios.get(
+        `${backendUrl}/leads?${params.toString()}`
+      );
+      let leadsData = response.data;
+
+      if (filter.sortBy === "priority") {
+        const priorityOrder = { High: 3, Medium: 2, Low: 1 };
+        leadsData.sort(
+          (a, b) =>
+            (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0)
+        );
+      }
+
+      if (filter.sortBy === "timeToClose") {
+        leadsData.sort((a, b) => (a.timeToClose || 0) - (b.timeToClose || 0));
+      }
+      setLoading(false);
+
+      setFilteredLeads(leadsData);
+    } catch (error) {
+      setFilteredLeads([]);
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  return (
+    <LeadContext.Provider
+      value={{
+        fetchLeads,
+        leads,
+        loading,
+        error,
+        filter,
+        setFilter,
+        addLead,
+        addComment,
+        filterQuery,
+        filteredLeads,
+        editLead,
+        fetchComments,
+        comments,
+        setComments,
+        setComments,
+        deleteLead,
+        deleteComment,
+        message,
+      }}
+    >
+      {children}
+    </LeadContext.Provider>
+  );
 };
