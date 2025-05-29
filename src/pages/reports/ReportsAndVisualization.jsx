@@ -4,22 +4,22 @@ import useLeads from "../../contexts/LeadContext";
 import { useFetch } from "../../hooks/useFetch";
 
 const ReportsAndVisualization = () => {
-  const backendUrl = `http://localhost:3005`;
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
   const {
     data: leadsInPipeline,
     loading: leadsPipelineLoad,
     error: leadsPipelineError,
-  } = useFetch(`${backendUrl}/report/pipeline`);
+  } = useFetch(`${API_URL}/report/pipeline`);
   const {
     data: leadsClosed,
     loading: leadsClosedLoading,
     error: leadsClosedError,
-  } = useFetch(`${backendUrl}/report/last-week`);
+  } = useFetch(`${API_URL}/report/last-week`);
   const {
     data: closedByAgentData,
     loading: closedByAgentLoading,
     error: closedByAgentError,
-  } = useFetch(`${backendUrl}/report/closed-by-agent`);
+  } = useFetch(`${API_URL}/report/closed-by-agent`);
 
   const leadsStatusPieChart = useRef(null);
   const leadsStatusPieChartInstance = useRef(null);
