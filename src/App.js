@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import Header from "./layout/Header";
 
 function App() {
+  console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
   return (
     <>
       <UIProvider>

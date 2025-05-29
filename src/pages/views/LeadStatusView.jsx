@@ -6,10 +6,10 @@ import { useFetch } from "../../hooks/useFetch"
 import FilterDropdown from "../../components/FilterDropdown"
 
 const LeadStatusView = () => {
-    const backendUrl = `http://localhost:3005`;
+    const API_URL = process.env.REACT_APP_BACKEND_URL;
     const {loading, filteredLeads, filter, setFilter, fetchLeads} = useLeads()
     const {agents} = useAgent()
-    const  {data: tags} = useFetch(`${backendUrl}/tags`)
+    const  {data: tags} = useFetch(`${API_URL}/tags`)
     const location = useLocation()
     const params = new URLSearchParams(location.search)
     const statusFromUrl = params.get("status")
