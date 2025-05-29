@@ -7,10 +7,10 @@ import FilterDropdown from "../../components/FilterDropdown";
 import useUI from "../../contexts/UIContext";
 
 const LeadList = () => {
-  const backendUrl = `http://localhost:3005`;
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
   const { loading, filteredLeads, filter, setFilter, fetchLeads, error } = useLeads();
   const { agents } = useAgent();
-  const { data: tags } = useFetch(`${backendUrl}/tags`);
+  const { data: tags } = useFetch(`${API_URL}/tags`);
   const { loadingUI, errorUI, messageUI } = useUI();
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import useAgent from "../../contexts/AgentContext";
 import useUI from "../../contexts/UIContext";
 
 const LeadDetail = () => {
-  const backendUrl = `http://localhost:3005`;
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
   const leadId = useParams();
   const {
@@ -23,8 +23,10 @@ const LeadDetail = () => {
   } = useLeads();
   const leadData = leads.find((lead) => lead._id === leadId.id);
   const { agents } = useAgent();
-  const { data: tags } = useFetch(`${backendUrl}/tags`);
+  const { data: tags } = useFetch(`${API_URL}/tags`);
   const { loadingUI, errorUI, messageUI } = useUI();
+
+  console.log("Comments:: " ,comments)
 
   const [commentData, setCommentData] = useState({
     commentText: "",
@@ -48,6 +50,7 @@ const LeadDetail = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    console.log(commentData)
     await addComment(commentData, leadId.id);
     setCommentData({ commentText: "", author: "" });
     await fetchComments(leadId.id);
@@ -114,6 +117,7 @@ const LeadDetail = () => {
           {comments?.length > 0 ? (
             <div className="list-group mb-4">
               {comments.map((comment) => (
+                
                 <div
                   key={comment._id}
                   className="list-group-item list-group-item-action mb-2 shadow-sm rounded"
@@ -195,13 +199,12 @@ const LeadDetail = () => {
 
   return (
     <div className="container">
+      { leadMessage
+        && messageUI(leadMessage)}
       {leadLoading
         ? loadingUI()
         : leadError
-        ? errorUI(leadError)
-        : leadMessage
-        ? messageUI(leadMessage)
-        : leadDetailsJSX()}
+        ? errorUI(leadError) : leadDetailsJSX()}
     </div>
   );
 };

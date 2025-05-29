@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAgent from "../../contexts/AgentContext";
 import useUI from "../../contexts/UIContext";
+import { useNavigate } from "react-router";
 
 const AgentList = () => {
   const { agents, loading, error, addAgent, deleteAgent, message } = useAgent();
@@ -10,6 +11,7 @@ const AgentList = () => {
     name: "",
     email: "",
   });
+  const navigate = useNavigate()
 
   useEffect(() => {
     setFormData({
@@ -44,6 +46,7 @@ const AgentList = () => {
       <div className="list-group shadow-sm mb-4">
         {agents.map((agent) => (
           <div
+            onClick={() => navigate(`/agents-view?salesAgent=${agent._id}`) }
             key={agent._id}
             className="list-group-item d-flex justify-content-between align-items-center rounded mb-2"
           >

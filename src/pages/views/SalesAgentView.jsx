@@ -1,57 +1,80 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router";
 import useAgent from "../../contexts/AgentContext";
 import useLeads from "../../contexts/LeadContext";
-import { useEffect } from "react";
+import useUI from "../../contexts/UIContext";
 import FilterDropdown from "../../components/FilterDropdown";
 
 const SalesAgentView = () => {
   const { agents, loading, error } = useAgent();
   const { setFilter, tags, filter, filteredLeads } = useLeads();
+  const { loadingUI, errorUI } = useUI();
+
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const agentIdFromUrl = params.get("salesAgent");
+  const agentIdFromUrl = new URLSearchParams(location.search).get("salesAgent");
 
   const agentData = agents.find((agent) => agent._id === agentIdFromUrl);
   const agentName = agentData?.name || "Anonymous";
 
   useEffect(() => {
-    setFilter((prev) => ({ ...prev, agentId: agentIdFromUrl }));
+    if (agentIdFromUrl) {
+      setFilter((prev) => ({ ...prev, agentId: agentIdFromUrl }));
+    }
   }, [agentIdFromUrl, setFilter]);
 
-  if (loading) return <div className="text-center my-5">Loading agents...</div>;
-  if (error) return <div className="alert alert-danger my-5 text-center">{error}</div>;
+  const renderLeadList = () => (
+    <section className="card shadow-sm my-4">
+      <div className="card-header bg-primary text-white text-center">
+        <h4 className="mb-0 fw-bold">Leads by {agentName}</h4>
+      </div>
+      <div className="card-body">
+        {filteredLeads.length === 0 ? (
+          <p className="text-center text-muted fst-italic">No leads found for this agent.</p>
+        ) : (
+          <ol className="list-group list-group-numbered mb-4">
+            {filteredLeads.map((lead) => (
+              <li key={lead._id} className="list-group-item">
+                {lead.name}
+              </li>
+            ))}
+          </ol>
+        )}
+        <div className="card mt-4 shadow-sm">
+          <div className="card-body">
+            <h6 className="mb-0 text-muted">Agent Info</h6>
+            <p className="mb-0">Name: <strong>{agentName}</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  const renderFilters = () => (
+    <section className="my-4">
+      <FilterDropdown
+        agents={agents}
+        setFilter={setFilter}
+        filter={filter}
+        tags={tags}
+        isAgentView={true}
+      />
+    </section>
+  );
+
+  if (!agentIdFromUrl) {
+    return (
+      <div className="container my-5">
+        <div className="alert alert-warning text-center">
+          No sales agent selected. Please use a valid link.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container my-4">
-      <h2 className="mb-4 text-center fw-bold">Lead List by {agentName}</h2>
-
-      {filteredLeads.length === 0 ? (
-        <p className="text-center fst-italic">No leads found for this agent.</p>
-      ) : (
-        <ol className="list-group list-group-numbered mb-4">
-          {filteredLeads.map((lead) => (
-            <li key={lead._id} className="list-group-item">
-              {lead.name}
-            </li>
-          ))}
-        </ol>
-      )}
-
-      <div className="card mb-4 shadow-sm">
-        <div className="card-body">
-          <h5 className="card-title mb-0">Sales Agent: {agentName}</h5>
-        </div>
-      </div>
-
-      <div>
-        <FilterDropdown
-          agents={agents}
-          setFilter={setFilter}
-          filter={filter}
-          tags={tags}
-          isAgentView={true}
-        />
-      </div>
+      {loading ? loadingUI() : error ? errorUI() : renderLeadList()}
+      {renderFilters()}
     </div>
   );
 };

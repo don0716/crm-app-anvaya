@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import useLeads from "../../contexts/LeadContext";
-import useAgent from "../../contexts/AgentContext";
 import useUI from "../../contexts/UIContext";
 
 const LeadForm = ({ isEditLead = false }) => {
@@ -199,12 +198,16 @@ const LeadForm = ({ isEditLead = false }) => {
   return (
     <div className="container my-4">
       <h2 className="mb-4">{isEditLead ? "Edit Lead Details" : "Create New Lead"}</h2>
+      <div>
+        {
+        message
+        && messageUI(message)
+      }
+      </div>
       {loading
         ? loadingUI()
         : error
         ? errorUI(error)
-        : message
-        ? messageUI(message)
         : leadFormJSX()}
     </div>
   );

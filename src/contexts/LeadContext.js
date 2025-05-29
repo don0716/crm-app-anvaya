@@ -6,7 +6,7 @@ const useLeads = () => useContext(LeadContext);
 export default useLeads;
 
 export const LeadProvider = ({ children }) => {
-  const backendUrl = `http://localhost:3005`;
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
   const [leads, setLeads] = useState([]);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,6 +22,7 @@ export const LeadProvider = ({ children }) => {
     sortBy: "",
   });
 
+  // Effects
   useEffect(() => {
     setTimeout(() => {
       setMessage("");
@@ -29,10 +30,18 @@ export const LeadProvider = ({ children }) => {
     }, 3000);
   }, [leads, error]);
 
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
+  useEffect(() => {
+    filterQuery();
+  }, [filter, leads]);
+
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${backendUrl}/leads`);
+      const res = await axios.get(`${API_URL}/leads`);
       if (res.data.length > 0) {
         setLeads(res.data);
         setLoading(false);
@@ -45,18 +54,11 @@ export const LeadProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchLeads();
-  }, []);
-
-  useEffect(() => {
-    filterQuery();
-  }, [filter, leads]);
 
   const addLead = async (newLead) => {
     setLoading(true);
     try {
-      const res = await axios.post(`${backendUrl}/leads`, newLead);
+      const res = await axios.post(`${API_URL}/leads`, newLead);
       console.log(res.data.lead);
       setLoading(false);
       setMessage("Lead Added Successfully");
@@ -70,28 +72,41 @@ export const LeadProvider = ({ children }) => {
   const editLead = async (leadId, updatedLead) => {
     setLoading(true);
     try {
-      const res = await axios.put(`${backendUrl}/leads/${leadId}`, updatedLead);
-      console.log(res.data);
+      const res = await axios.put(`${API_URL}/leads/${leadId}`, updatedLead);
+      if (res.data.message) {
+        setMessage(res.data.message);
+        setLoading(false);
 
-      setLoading(false);
-      setMessage("Lead Updated Successfully");
-      fetchLeads();
+        fetchLeads();
+      }
     } catch (error) {
       setError(error.message);
       setLoading(false);
     }
   };
 
+  const deleteLead = async (leadId) => {
+    try {
+      const res = await axios.delete(`${API_URL}/leads/${leadId}`);
+      if (res.ok) {
+        console.log(res.data);
+        console.log("Success");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const addComment = async (commentData, leadId) => {
     setLoading(true);
     try {
-      console.log(commentData);
+      console.log("CommentData form", commentData);
       const res = await axios.post(
-        `${backendUrl}/leads/${leadId}/comments`,
+        `${API_URL}/leads/${leadId}/comments`,
         commentData
       );
       console.log(res.data);
-      setMessage("Comment Added!");
+      // setMessage("Comment Added!");
       setLoading(false);
       fetchLeads();
     } catch (error) {
@@ -103,7 +118,7 @@ export const LeadProvider = ({ children }) => {
   const fetchComments = async (leadId) => {
     setLoading(true);
     try {
-      const res = await axios.get(`${backendUrl}/leads/${leadId}/comments`);
+      const res = await axios.get(`${API_URL}/leads/${leadId}/comments`);
       setComments(res.data);
       setLoading(false);
     } catch (error) {
@@ -113,25 +128,15 @@ export const LeadProvider = ({ children }) => {
   };
 
   const deleteComment = async (commentId, leadId) => {
+    setLoading(true);
     try {
-      const res = await axios.delete(`${backendUrl}/comments/${commentId}`);
+      const res = await axios.delete(`${API_URL}/comments/${commentId}`);
       // console.log(res.data);
       setComments((prev) =>
         prev.filter((comment) => comment._id !== commentId)
       );
-      await fetchComments(leadId);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const deleteLead = async (leadId) => {
-    try {
-      const res = await axios.delete(`${backendUrl}/leads/${leadId}`);
-      if (res.ok) {
-        console.log(res.data);
-        console.log("Success");
-      }
+      setLoading(false);
+      // await fetchComments(leadId);
     } catch (error) {
       console.log(error.message);
     }
@@ -148,9 +153,7 @@ export const LeadProvider = ({ children }) => {
       if (filter.priority) params.append("priority", filter.priority);
       if (filter.sortBy) params.append("sortBy", filter.sortBy);
 
-      const response = await axios.get(
-        `${backendUrl}/leads?${params.toString()}`
-      );
+      const response = await axios.get(`${API_URL}/leads?${params.toString()}`);
       let leadsData = response.data;
 
       if (filter.sortBy === "priority") {
@@ -165,7 +168,6 @@ export const LeadProvider = ({ children }) => {
         leadsData.sort((a, b) => (a.timeToClose || 0) - (b.timeToClose || 0));
       }
       setLoading(false);
-
       setFilteredLeads(leadsData);
     } catch (error) {
       setFilteredLeads([]);
