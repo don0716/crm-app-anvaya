@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router"
+import {  useLocation } from "react-router"
 import useLeads from "../../contexts/LeadContext"
 import { useEffect, useState } from "react"
 import useAgent from "../../contexts/AgentContext"
@@ -17,6 +17,10 @@ const LeadStatusView = () => {
     useEffect(() => {
         setFilter((prev) => ({...prev, status: statusFromUrl }))
     }, [filter.status])
+
+    useEffect(() => {
+        fetchLeads()
+    }, [])
 
     function leadsOverview() {
         return (
@@ -52,9 +56,7 @@ const LeadStatusView = () => {
 
     
 
-    useEffect(() => {
-        fetchLeads()
-    }, [])
+    
     
 
     

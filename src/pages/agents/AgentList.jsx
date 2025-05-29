@@ -46,11 +46,10 @@ const AgentList = () => {
       <div className="list-group shadow-sm mb-4">
         {agents?.map((agent) => (
           <div
-            onClick={() => navigate(`/agents-view?salesAgent=${agent._id}`) }
             key={agent._id}
             className="list-group-item d-flex justify-content-between align-items-center rounded mb-2"
           >
-            <div>
+            <div style={{cursor: "pointer"}} onClick={() => navigate(`/agents-view?salesAgent=${agent._id}`) }>
               <strong>{agent.name}</strong>{" "}
               <small className="text-muted">- {agent.email}</small>
             </div>

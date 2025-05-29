@@ -3,13 +3,16 @@ import useLeads from "../contexts/LeadContext";
 import { useEffect } from "react";
 import useAgent from "../contexts/AgentContext";
 import useUI from "../contexts/UIContext";
+import { useFetch } from "../hooks/useFetch";
 
 const Dashboard = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
-  const { filteredLeads, setFilter, tags, loading, error } = useLeads();
+  const { filteredLeads, setFilter, loading, error } = useLeads();
   const { agents } = useAgent();
   const { loadingUI, errorUI } = useUI();
   const statusList = ["New", "Contacted", "Qualified", "Closed"];
+  const {data: tags} = useFetch(`${API_URL}/tags`)
 
   useEffect(() => {
     setFilter([]);
@@ -124,7 +127,8 @@ const Dashboard = () => {
           >
             + Add New Lead
           </Link>
-          <Link to={`/sales-agents`} className="btn btn-outline-primary">
+          
+          <Link to={`/sales-agents`} state={{ agents: agents, tags: tags?.tag }} className="btn btn-outline-primary">
             + Add New Agent
           </Link>
         </div>
