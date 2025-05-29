@@ -6,14 +6,14 @@ import useUI from "../contexts/UIContext";
 import { useFetch } from "../hooks/useFetch";
 
 const Dashboard = () => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  const API_URL = `http://localhost:3005`
   const navigate = useNavigate();
   const { filteredLeads, setFilter, loading, error } = useLeads();
   const { agents } = useAgent();
   const { loadingUI, errorUI } = useUI();
   const statusList = ["New", "Contacted", "Qualified", "Closed"];
   const {data: tags} = useFetch(`${API_URL}/tags`)
-
+  console.log(tags)
   useEffect(() => {
     setFilter([]);
   }, []);
