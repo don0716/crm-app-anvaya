@@ -6,7 +6,7 @@ const useLeads = () => useContext(LeadContext);
 export default useLeads;
 
 export const LeadProvider = ({ children }) => {
-  const API_URL = `https://crm-app-backend-phi.vercel.app`;
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
   const [leads, setLeads] = useState([]);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
