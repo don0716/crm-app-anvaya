@@ -44,7 +44,7 @@ const AgentList = () => {
 
     return (
       <div className="list-group shadow-sm mb-4">
-        {agents.map((agent) => (
+        {agents?.map((agent) => (
           <div
             onClick={() => navigate(`/agents-view?salesAgent=${agent._id}`) }
             key={agent._id}

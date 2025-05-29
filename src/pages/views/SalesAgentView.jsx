@@ -13,7 +13,7 @@ const SalesAgentView = () => {
   const location = useLocation();
   const agentIdFromUrl = new URLSearchParams(location.search).get("salesAgent");
 
-  const agentData = agents.find((agent) => agent._id === agentIdFromUrl);
+  const agentData = agents?.find((agent) => agent._id === agentIdFromUrl);
   const agentName = agentData?.name || "Anonymous";
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const SalesAgentView = () => {
           <p className="text-center text-muted fst-italic">No leads found for this agent.</p>
         ) : (
           <ol className="list-group list-group-numbered mb-4">
-            {filteredLeads.map((lead) => (
+            {filteredLeads?.map((lead) => (
               <li key={lead._id} className="list-group-item">
                 {lead.name}
               </li>

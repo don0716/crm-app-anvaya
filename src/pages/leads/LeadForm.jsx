@@ -109,7 +109,7 @@ const LeadForm = ({ isEditLead = false }) => {
               onChange={inputHandler}
             >
               <option value="">-- Select Agent --</option>
-              {agents.map((agent) => (
+              {agents?.map((agent) => (
                 <option key={agent._id} value={agent._id}>
                   {agent.name}
                 </option>
@@ -138,7 +138,7 @@ const LeadForm = ({ isEditLead = false }) => {
           <div className="mb-3">
             <label className="form-label">Tags</label>
             <div className="d-flex flex-wrap gap-3">
-              {tags.map((tag) => (
+              {tags?.map((tag) => (
                 <div key={tag._id} className="form-check">
                   <input
                     type="checkbox"

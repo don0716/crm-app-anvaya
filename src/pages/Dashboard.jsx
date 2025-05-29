@@ -15,7 +15,7 @@ const Dashboard = () => {
     setFilter([]);
   }, []);
 
-  const statusCounts = filteredLeads.reduce(
+  const statusCounts = filteredLeads?.reduce(
     (acc, lead) => {
       const status = lead.status;
       if (status === "New") acc.new++;

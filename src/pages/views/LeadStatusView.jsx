@@ -28,7 +28,7 @@ const LeadStatusView = () => {
                     <div className="list-group">
                 {
                     
-                        filteredLeads.map((lead) => (
+                        filteredLeads?.map((lead) => (
                         <div key={lead._id} className="list-group-item">
                             <div className="d-flex justify-content-between">
                                 <div>
@@ -61,7 +61,7 @@ const LeadStatusView = () => {
     return (
         <div>
 
-            {loading ? "Loading..." : filteredLeads.length === 0 ? <h4 className="text-center">---- No Leads Found ----</h4> : leadsOverview() }
+            {loading ? "Loading..." : filteredLeads?.length === 0 ? <h4 className="text-center">---- No Leads Found ----</h4> : leadsOverview() }
 
             <hr />
 
