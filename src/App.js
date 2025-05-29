@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LeadList from "./pages/leads/LeadList";
 import LeadForm from "./pages/leads/LeadForm";
 import LeadDetails from "./pages/leads/LeadDetails";
