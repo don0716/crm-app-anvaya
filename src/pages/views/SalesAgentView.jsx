@@ -6,9 +6,9 @@ import useUI from "../../contexts/UIContext";
 import FilterDropdown from "../../components/FilterDropdown";
 
 const SalesAgentView = () => {
-  const { agents, loading, error } = useAgent();
-  const { setFilter, tags, filter, filteredLeads } = useLeads();
-  const { loadingUI, errorUI } = useUI();
+  const { agents, loading: agentLoading , error:agentError } = useAgent();
+  const { setFilter, tags, filter, filteredLeads, loading: leadsLoading, error: leadsError, message: leadsMessage } = useLeads();
+  const { loadingUI, errorUI, messageUI } = useUI();
 
   const location = useLocation();
   const agentIdFromUrl = new URLSearchParams(location.search).get("salesAgent");
@@ -73,7 +73,8 @@ const SalesAgentView = () => {
 
   return (
     <div className="container my-4">
-      {loading ? loadingUI() : error ? errorUI() : renderLeadList()}
+      {leadsMessage && messageUI()}
+      {leadsLoading || agentLoading ? loadingUI() : leadsError || agentError ? errorUI() : renderLeadList()}
       {renderFilters()}
     </div>
   );

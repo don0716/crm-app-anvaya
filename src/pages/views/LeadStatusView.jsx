@@ -4,11 +4,13 @@ import { useEffect, useState } from "react"
 import useAgent from "../../contexts/AgentContext"
 import { useFetch } from "../../hooks/useFetch"
 import FilterDropdown from "../../components/FilterDropdown"
+import useUI from "../../contexts/UIContext"
 
 const LeadStatusView = () => {
     const API_URL = process.env.REACT_APP_BACKEND_URL;
-    const {loading, filteredLeads, filter, setFilter, fetchLeads} = useLeads()
-    const {agents} = useAgent()
+    const {loading: leadsLoading, error: leadsError, message: leadsMessage, filteredLeads, filter, setFilter, fetchLeads} = useLeads()
+    const {agents, loading: agentLoading, error: agentError } = useAgent()
+    const {loadingUI, messageUI, errorUI} = useUI()
     const  {data: tags} = useFetch(`${API_URL}/tags`)
     const location = useLocation()
     const params = new URLSearchParams(location.search)
@@ -24,7 +26,8 @@ const LeadStatusView = () => {
 
     function leadsOverview() {
         return (
-            <div className="card">
+            <div>
+                <div className="card">
                 <div className="text-center card-header">
                     <h1>Lead Overview</h1>
                 </div>
@@ -51,6 +54,18 @@ const LeadStatusView = () => {
                     <strong>Status:</strong> {statusFromUrl}
                 </div>
             </div>
+            <hr />
+
+            <div className="list-group">
+                {
+                    filteredLeads?.map((lead, index) => (
+                        <div key={lead._id} className="list-group-item">
+                            Lead {index + 1} - {lead.name}  <strong>[Sales Agent: {lead.salesAgent?.name || <span className="text-danger">Not Assigned Yet</span>}]</strong>
+                        </div>
+                    ))
+                }
+            </div>
+            </div>
         )
     }
 
@@ -63,19 +78,16 @@ const LeadStatusView = () => {
     return (
         <div>
 
-            {loading ? "Loading..." : filteredLeads?.length === 0 ? <h4 className="text-center">---- No Leads Found ----</h4> : leadsOverview() }
-
-            <hr />
-
-            <div className="list-group">
-                {
-                    filteredLeads?.map((lead, index) => (
-                        <div key={lead._id} className="list-group-item">
-                            Lead {index + 1} - {lead.name}  <strong>[Sales Agent: {lead.salesAgent?.name || <span className="text-danger">Not Assigned Yet</span>}]</strong>
-                        </div>
-                    ))
+            {
+                leadsLoading || agentLoading 
+                    ? loadingUI() 
+                    : filteredLeads?.length === 0 
+                    ? <h4 className="text-center">---- No Leads Found ----</h4> 
+                    : leadsOverview()
                 }
-            </div>
+
+
+            
 
             <hr />
             
