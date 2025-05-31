@@ -68,7 +68,15 @@ export const AgentProvider = ({ children }) => {
 
   return (
     <AgentContext.Provider
-      value={{ agents, loading, error, addAgent, deleteAgent, message }}
+      value={{
+        agents,
+        loading,
+        error,
+        addAgent,
+        deleteAgent,
+        message,
+        fetchAgents,
+      }}
     >
       {children}
     </AgentContext.Provider>

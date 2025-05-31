@@ -15,6 +15,7 @@ const LeadDetail = () => {
     comments,
     setComments,
     fetchComments,
+    fetchLeads,
     deleteLead,
     deleteComment,
     loading: leadLoading,
@@ -22,24 +23,29 @@ const LeadDetail = () => {
     message: leadMessage,
   } = useLeads();
   const leadData = leads.find((lead) => lead._id === leadId.id);
-  const { agents } = useAgent();
+  const { agents, fetchAgents, loading: agentLoading } = useAgent();
   const { data: tags } = useFetch(`${API_URL}/tags`);
   const { loadingUI, errorUI, messageUI } = useUI();
-
-  console.log("Comments:: " ,comments)
 
   const [commentData, setCommentData] = useState({
     commentText: "",
     author: "",
   });
 
+ 
   useEffect(() => {
-    if (leadId.id) {
-      setComments([]);
-      fetchComments(leadId.id);
+    const initializeData = async () => {
+      if(leadId.id) {
+        setComments([])
+        await fetchComments(leadId.id)
+      }
+      await fetchAgents()
+      await fetchLeads()
     }
-  }, [leadId.id]);
+    initializeData()
 
+  }, [leadId.id])
+  
   const inputHandler = (e) => {
     const { value, name } = e.target;
     setCommentData((prev) => ({
@@ -62,9 +68,9 @@ const LeadDetail = () => {
         <div className="card-header d-flex justify-content-between align-items-center bg-primary text-white">
           <h4 className="mb-0">{leadData?.name}</h4>
           <button
-            onClick={() => {
-              deleteLead(leadData?._id);
-              navigate(`/leads`);
+            onClick={async () => {
+              await deleteLead(leadData?._id);
+              navigate(`/leads`)
             }}
             className="btn btn-sm btn-danger"
             title="Delete Lead"
@@ -105,7 +111,7 @@ const LeadDetail = () => {
 
           <Link
             to={`/leads/edit/${leadData?._id}`}
-            state={{ agents: agents, tags: tags?.tag, lead: leadData }}
+            state={{ agents: agents, tags: tags?.tag, lead: leadData, leadId }}
             className="btn btn-outline-primary mb-4"
           >
             Edit Lead
@@ -201,7 +207,8 @@ const LeadDetail = () => {
     <div className="container">
       { leadMessage
         && messageUI(leadMessage)}
-      {leadLoading
+
+      {leadLoading || agentLoading
         ? loadingUI()
         : leadError
         ? errorUI(leadError) : leadDetailsJSX()}

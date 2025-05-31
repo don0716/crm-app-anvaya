@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const LeadContext = createContext();
 const useLeads = () => useContext(LeadContext);
@@ -21,14 +22,13 @@ export const LeadProvider = ({ children }) => {
     priority: "",
     sortBy: "",
   });
-
   // Effects
   useEffect(() => {
     setTimeout(() => {
       setMessage("");
       setError("");
     }, 3000);
-  }, [leads, error]);
+  }, [leads, error, comments]);
 
   useEffect(() => {
     fetchLeads();
@@ -60,9 +60,10 @@ export const LeadProvider = ({ children }) => {
     try {
       const res = await axios.post(`${API_URL}/leads`, newLead);
       console.log(res.data.lead);
-      setLoading(false);
-      setMessage("Lead Added Successfully");
-      fetchLeads();
+      if (res.data.message) {
+        setLoading(false);
+        setMessage(res.data.message);
+      }
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -76,7 +77,6 @@ export const LeadProvider = ({ children }) => {
       if (res.data.message) {
         setMessage(res.data.message);
         setLoading(false);
-
         fetchLeads();
       }
     } catch (error) {
@@ -86,11 +86,12 @@ export const LeadProvider = ({ children }) => {
   };
 
   const deleteLead = async (leadId) => {
+    setLoading(true);
     try {
       const res = await axios.delete(`${API_URL}/leads/${leadId}`);
-      if (res.ok) {
-        console.log(res.data);
-        console.log("Success");
+      if (res.data.message) {
+        setMessage(res.data.message);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error.message);
@@ -106,9 +107,11 @@ export const LeadProvider = ({ children }) => {
         commentData
       );
       console.log(res.data);
-      // setMessage("Comment Added!");
-      setLoading(false);
-      fetchLeads();
+      if (res.data.message) {
+        setMessage(res.data.message);
+        setLoading(false);
+        fetchLeads();
+      }
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -122,7 +125,6 @@ export const LeadProvider = ({ children }) => {
       setComments(res.data);
       setLoading(false);
     } catch (error) {
-      // setError(error.message);
       setLoading(false);
     }
   };
@@ -131,14 +133,16 @@ export const LeadProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.delete(`${API_URL}/comments/${commentId}`);
-      // console.log(res.data);
-      setComments((prev) =>
-        prev.filter((comment) => comment._id !== commentId)
-      );
-      setLoading(false);
-      // await fetchComments(leadId);
+      if (res.data.message) {
+        setComments((prev) =>
+          prev.filter((comment) => comment._id !== commentId)
+        );
+        setLoading(false);
+        setMessage(res.data.message);
+      }
     } catch (error) {
-      console.log(error.message);
+      setLoading(false);
+      setError(error.message);
     }
   };
 
@@ -171,7 +175,7 @@ export const LeadProvider = ({ children }) => {
       setFilteredLeads(leadsData);
     } catch (error) {
       setFilteredLeads([]);
-      setError(error.message);
+      // setError(error.message); // getting error message when no leads found which is not required.
       setLoading(false);
     }
   };

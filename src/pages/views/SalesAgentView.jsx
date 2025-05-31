@@ -6,8 +6,16 @@ import useUI from "../../contexts/UIContext";
 import FilterDropdown from "../../components/FilterDropdown";
 
 const SalesAgentView = () => {
-  const { agents, loading: agentLoading , error:agentError } = useAgent();
-  const { setFilter, tags, filter, filteredLeads, loading: leadsLoading, error: leadsError, message: leadsMessage } = useLeads();
+  const { agents, loading: agentLoading, error: agentError } = useAgent();
+  const {
+    setFilter,
+    tags,
+    filter,
+    filteredLeads,
+    loading: leadsLoading,
+    error: leadsError,
+    message: leadsMessage,
+  } = useLeads();
   const { loadingUI, errorUI, messageUI } = useUI();
 
   const location = useLocation();
@@ -23,59 +31,69 @@ const SalesAgentView = () => {
   }, [agentIdFromUrl, setFilter]);
 
   const renderLeadList = () => (
-    <section className="card shadow-sm my-4">
+    <section className="card shadow-sm mb-4">
       <div className="card-header bg-primary text-white text-center">
-        <h4 className="mb-0 fw-bold">Leads by {agentName}</h4>
+        <h4 className="mb-0 fw-bold">Leads Handled by {agentName}</h4>
       </div>
       <div className="card-body">
         {filteredLeads.length === 0 ? (
-          <p className="text-center text-muted fst-italic">No leads found for this agent.</p>
+          <div className="alert alert-info text-center">
+            No leads found for this agent.
+          </div>
         ) : (
-          <ol className="list-group list-group-numbered mb-4">
-            {filteredLeads?.map((lead) => (
-              <li key={lead._id} className="list-group-item">
+          <ol className="list-group list-group-numbered">
+            {filteredLeads.map((lead) => (
+              <li key={lead._id} className="list-group-item d-flex justify-content-between align-items-center">
                 {lead.name}
+                {lead.status && <span className="badge bg-secondary">{lead.status}</span>}
               </li>
             ))}
           </ol>
         )}
-        <div className="card mt-4 shadow-sm">
+
+        <div className="card mt-4 border-0 shadow-sm">
           <div className="card-body">
-            <h6 className="mb-0 text-muted">Agent Info</h6>
-            <p className="mb-0">Name: <strong>{agentName}</strong></p>
+            <h6 className="text-muted mb-2">Agent Details</h6>
+            <p className="mb-1"><strong>Name:</strong> {agentName}</p>
+            {agentData?.email && <p className="mb-1"><strong>Email:</strong> {agentData.email}</p>}
+            {agentData?.phone && <p><strong>Phone:</strong> {agentData.phone}</p>}
           </div>
         </div>
       </div>
     </section>
   );
 
-  const renderFilters = () => (
-    <section className="my-4">
-      <FilterDropdown
-        agents={agents}
-        setFilter={setFilter}
-        filter={filter}
-        tags={tags}
-        isAgentView={true}
-      />
-    </section>
-  );
 
-  if (!agentIdFromUrl) {
-    return (
-      <div className="container my-5">
-        <div className="alert alert-warning text-center">
-          No sales agent selected. Please use a valid link.
-        </div>
-      </div>
-    );
-  }
+
+  // if (!agentIdFromUrl) {
+  //   return (
+  //     <div className="container my-5">
+  //       <div className="alert alert-warning text-center">
+  //         No sales agent selected. Please use a valid link or choose from the dropdown.
+  //       </div>
+  //       {renderFilters()}
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="container my-4">
       {leadsMessage && messageUI()}
-      {leadsLoading || agentLoading ? loadingUI() : leadsError || agentError ? errorUI() : renderLeadList()}
-      {renderFilters()}
+      {leadsLoading || agentLoading
+        ? loadingUI()
+        : leadsError || agentError
+        ? errorUI()
+        : renderLeadList()}
+        
+      <section className="mb-5">
+            <FilterDropdown
+              agents={agents}
+              setFilter={setFilter}
+              filter={filter}
+              tags={tags}
+              isAgentView={true}
+            />
+      </section>
     </div>
   );
 };

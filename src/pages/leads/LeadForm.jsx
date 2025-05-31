@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import useLeads from "../../contexts/LeadContext";
 import useUI from "../../contexts/UIContext";
 
 const LeadForm = ({ isEditLead = false }) => {
+  const navigate = useNavigate()
   const initialFormState = {
     name: "",
     source: "",
@@ -19,6 +20,8 @@ const LeadForm = ({ isEditLead = false }) => {
   const agents = location.state?.agents || [];
   const tags = location.state?.tags || [];
   const editingLead = location.state?.lead;
+  const leadId = location.state?.leadId
+  
 
   const { addLead, loading, error, editLead, message } = useLeads();
   const { loadingUI, errorUI, messageUI } = useUI();
@@ -50,18 +53,22 @@ const LeadForm = ({ isEditLead = false }) => {
     }
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (formData.tags.length === 0) {
       alert("Please select at least one tag.");
       return;
     }
-    isEditLead && editingLead ? editLead(editingLead._id, formData) : addLead(formData);
-  };
 
-  useEffect(() => {
-    if (message && !isEditLead) setFormData(initialFormState);
-  }, [message]);
+    if(isEditLead && editingLead) {
+      await editLead(editingLead._id, formData)
+      navigate(`/leads/${leadId.id}`)
+    } else {
+      await addLead(formData);
+      navigate(`/leads`)
+    }
+
+  };
 
   const leadFormJSX = () => (
     <div className="row">
