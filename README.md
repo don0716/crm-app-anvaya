@@ -1,64 +1,70 @@
-##  Anvaya CRM – PRD Checklist
+# Anvaya CRM App
+Anvaya CRM is a web app to manage, track, and close leads with ease. It streamlines the lead lifecycle — from creation to closure — with features like sales agent assignment, status tracking, per-lead comments, and URL-based filters. You can add or remove agents anytime and assign each lead to a specific agent. Built with React, Express, and MongoDB, Anvaya also offers clear charts and reports on lead distribution, agent performance, and pipeline health.
 
-This checklist outlines the essential features, modules, and workflows planned for the Anvaya CRM application.
+---
+
+## Demo Link
+
+ [Live Demo](https://crm-app-anvaya.vercel.app/)
+
+---
+## Quick Start
+
+```
+git clone https://github.com/don0716/crm-app-anvaya.git
+cd <your-repo>
+npm install
+npm run dev  # or `npm start` / `yarn dev`
+```
+
+---
+## Technologies
+- React JS
+- React Router
+- Node JS
+- Express
+- MongoDB
+- JWT
 
 ---
 
-### Core Modules
-
-- [x] Lead Management
-  - [x] Create new lead
-  - [x] Assign sales agent
-  - [x] Set lead status, source, tags, priority
-  - [x] Filter/sort leads
-  - [x] Update/delete lead
-- [x] Comments Section
-  - [x] Add comment to a lead
-  - [x] Display author & timestamp
-  - [x] delete comment
-- [x] Sales Agent Management
-  - [x] Create new agent
-  - [x] View all agents
-  - [x] Assign agents to leads
-- [x] Lead Views
-  - [x] Lead List View
-  - [x] Lead Details View
-  - [x] Lead Status View (grouped by status)
-  - [x] Sales Agent View (grouped by agent)
+## Demo Video
+Watch a walkthrough (5-7 minutes) of all the major features of this app:
+[Loom Video Link](link)
 
 ---
+
 ### Pages and Features on each Page.
 
-- [x] Dashboard Page
+**Dashboard Page**
   - [x] All Leads Section.
   - [x] Sales Agent View
   - [x] Lead Status overview with number of leads per status.
   - [x] Add new lead and add new agent Buttons that take us to the respective pages.
-- [x] Leads Page
+**Leads Page**
   - [x] Leads Overview with status, source and priority badge for each Lead and displays Sales agent of that Lead.
   - [x] If Sales Agent is deleted, displays Not assigned.
   - [x] Details button that takes us to the details of that Lead.
   - [x] Sorting and Filtering Component.
-- [x] Lead Details Page.
+**Lead Details Page**
   - [x] Lead Details and delete button to delete Lead.
   - [x] Edit Lead Button that Takes us to Lead form to edit lead.
   - [x] Comments Section. Displays comments and allows us to Add Comment by selecting sales agent as author of the comment.
   - [x] delete button next to each comment allows to delete individual comment.
-  - [x] Automatically renders page when each comment or deleted.
-- [x] Lead Form Component. (Edit or Add Lead)
+  - [x] Automatically renders page when each comment is added or deleted.
+**Lead Form Component. (Edit or Add Lead)**
   - [x] Add Lead Form when adding a lead. After New Lead is added. we are automatically redirected to the leads Page.
   - [x] On successfully lead edit. we are redirected to lead details page.
-- [x] Sales Agents Page
+**Sales Agents Page**
   - [x] View All Sales Agents and button to delete each sales agent.
-  - [x] buton to add new Sales Agent.
-- [x]  Sales Agent View Page.
-  - [x]  Displays All Leads by the selected Sales Agent.
-  - [x]  Filtering options to filter by status and priority and sort by time to close.
-- [x]  Lead Status Page.
+  - [x] Buton to add new Sales Agent.
+**Sales Agent View Page**
+  - [x]  Displays All Leads by the selected Sales Agent with the status of each lead.
+  - [x]  Displays Agent Details - Name and Email.
+  - [x]  Filtering options to filter by status and priority and sort by time to close radio button.
+**Lead Status Page**
   - [x]  All Leads from the selected Lead status are displayed.
   - [x]  Filtering options to filter by Sales agent and priority and sort by time to close.
-
-  
 
 ---
 
@@ -99,7 +105,6 @@ This checklist outlines the essential features, modules, and workflows planned f
 ---
 
 ###  UI Layout
-
 - [x] Sidebar Navigation
 - [x] Loading, error and message bar shown at the top level of page.
 - [x] Header - Displays the page detail
@@ -112,12 +117,43 @@ This checklist outlines the essential features, modules, and workflows planned f
 - [x] Add/Edit Lead Form
 
 ---
-
 ###  Tags (Lead Categorization)
-
 - [x] Dynamically adds tags from backend.
 
 ---
+
+<!-- ##  Anvaya CRM – PRD Checklist
+
+This checklist outlines the essential features, modules, and workflows planned for the Anvaya CRM application.
+
+---
+
+### Core Modules
+
+- [x] Lead Management
+  - [x] Create new lead
+  - [x] Assign sales agent
+  - [x] Set lead status, source, tags, priority
+  - [x] Filter/sort leads
+  - [x] Update/delete lead
+- [x] Comments Section
+  - [x] Add comment to a lead
+  - [x] Display author & timestamp
+  - [x] delete comment
+- [x] Sales Agent Management
+  - [x] Create new agent
+  - [x] View all agents
+  - [x] Assign agents to leads
+- [x] Lead Views
+  - [x] Lead List View
+  - [x] Lead Details View
+  - [x] Lead Status View (grouped by status)
+  - [x] Sales Agent View (grouped by agent)
+
+--- -->
+
+## Contact
+For bugs or feature requrest, please reach out to donmonteiro@gmail.com
 
 ###  Stretch Goals / Future
 
