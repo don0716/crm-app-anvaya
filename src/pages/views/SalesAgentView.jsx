@@ -65,17 +65,6 @@ const SalesAgentView = () => {
 
 
 
-  // if (!agentIdFromUrl) {
-  //   return (
-  //     <div className="container my-5">
-  //       <div className="alert alert-warning text-center">
-  //         No sales agent selected. Please use a valid link or choose from the dropdown.
-  //       </div>
-  //       {renderFilters()}
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className="container my-4">
       {leadsMessage && messageUI()}

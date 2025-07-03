@@ -54,7 +54,7 @@ const ReportsAndVisualization = () => {
       return;
 
     // Prepare data for charts
-    const labels = closedByAgentData.map((agent) => agent.salesAgentName);
+    const labels = closedByAgentData.map((agent) => agent.salesAgentName );
     const dataCounts = closedByAgentData.map((agent) => agent.closedLeadsCount);
 
     const pieDataForLeadStatus = {

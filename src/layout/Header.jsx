@@ -14,7 +14,7 @@ const Header = () => {
         "/reports": "Reports & Visualization"
     };
 
-     const headingText = routeHeadings[location.pathname] || "CRM";
+     const headingText = routeHeadings[location.pathname] || "Anvaya CRM Dashboard";
 
     return (
         <div>

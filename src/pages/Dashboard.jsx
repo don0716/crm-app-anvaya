@@ -13,7 +13,6 @@ const Dashboard = () => {
   const { loadingUI, errorUI } = useUI();
   const statusList = ["New", "Contacted", "Qualified", "Closed"];
   const {data: tags} = useFetch(`${API_URL}/tags`)
-  console.log(tags)
   useEffect(() => {
     setFilter([]);
   }, []);

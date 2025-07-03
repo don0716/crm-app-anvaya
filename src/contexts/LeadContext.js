@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
 
 const LeadContext = createContext();
 const useLeads = () => useContext(LeadContext);
@@ -59,7 +58,6 @@ export const LeadProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.post(`${API_URL}/leads`, newLead);
-      console.log(res.data.lead);
       if (res.data.message) {
         setLoading(false);
         setMessage(res.data.message);
@@ -94,7 +92,7 @@ export const LeadProvider = ({ children }) => {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error.message);
+      setMessage(error.message);
     }
   };
 
@@ -175,7 +173,6 @@ export const LeadProvider = ({ children }) => {
       setFilteredLeads(leadsData);
     } catch (error) {
       setFilteredLeads([]);
-      // setError(error.message); // getting error message when no leads found which is not required.
       setLoading(false);
     }
   };
