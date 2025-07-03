@@ -34,39 +34,36 @@ Watch a walkthrough 4 minute video of all the major features of this app:
 ---
 
 ### Pages and Features on each Page.
-**Dashboard Page**
+#### **Dashboard Page**
   - [x] All Leads Section.
   - [x] Sales Agent View
   - [x] Lead Status overview with number of leads per status.
   - [x] Add new lead and add new agent Buttons that take us to the respective pages.
-**Leads Page**
+#### **Leads Page**
   - [x] Leads Overview with status, source and priority badge for each Lead and displays Sales agent of that Lead.
   - [x] If Sales Agent is deleted, displays Not assigned.
   - [x] Details button that takes us to the details of that Lead.
   - [x] Sorting and Filtering Component.
-**Lead Details Page**
+#### **Lead Details Page**
   - [x] Lead Details and delete button to delete Lead.
   - [x] Edit Lead Button that Takes us to Lead form to edit lead.
   - [x] Comments Section. Displays comments and allows us to Add Comment by selecting sales agent as author of the comment.
   - [x] delete button next to each comment allows to delete individual comment.
   - [x] Automatically renders page when each comment is added or deleted.
-**Lead Form Component. (Edit or Add Lead)**
+#### **Lead Form Component. (Edit or Add Lead)**
   - [x] Add Lead Form when adding a lead. After New Lead is added. we are automatically redirected to the leads Page.
   - [x] On successfully lead edit. we are redirected to lead details page.
-**Sales Agents Page**
+#### **Sales Agents Page**
   - [x] View All Sales Agents and button to delete each sales agent.
   - [x] Buton to add new Sales Agent.
-**Sales Agent View Page**
+#### **Sales Agent View Page**
   - [x]  Displays All Leads by the selected Sales Agent with the status of each lead.
   - [x]  Displays Agent Details - Name and Email.
   - [x]  Filtering options to filter by status and priority and sort by time to close radio button.
-**Lead Status Page**
+#### **Lead Status Page**
   - [x]  All Leads from the selected Lead status are displayed.
   - [x]  Filtering options to filter by Sales agent and priority and sort by time to close.
-
----
-
-###  Reports & Charts
+####  Reports & Charts
 - [x] Total Leads Closed By Agents. x - Sales Agent, y - number of leads closed. (bar chart)
 - [x] Leads Status Distribution (pie chart)
 - [x] Leads in pipeline and leads closed(last Week) (Pie Chart)
@@ -113,12 +110,6 @@ Watch a walkthrough 4 minute video of all the major features of this app:
 - [x] Add/Edit Lead Form
 
 ---
-###  Tags (Lead Categorization)
-- [x] Dynamically adds tags from backend.
-
----
-
-
 ###  Stretch Goals / Future
 - [ ] Auth system (Login, Role-based access)
 
