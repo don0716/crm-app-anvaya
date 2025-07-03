@@ -24,18 +24,16 @@ npm run dev  # or `npm start` / `yarn dev`
 - Node JS
 - Express
 - MongoDB
-- JWT
 
 ---
 
 ## Demo Video
-Watch a walkthrough (5-7 minutes) of all the major features of this app:
-[Loom Video Link](link)
+Watch a walkthrough 4 minute video of all the major features of this app:
+[Loom Video Link](https://www.loom.com/share/226bb549a10a486b9436facb470779ab?sid=04e5c13a-0adc-4d30-bf74-1fdf79d236ab)
 
 ---
 
 ### Pages and Features on each Page.
-
 **Dashboard Page**
   - [x] All Leads Section.
   - [x] Sales Agent View
@@ -69,7 +67,6 @@ Watch a walkthrough (5-7 minutes) of all the major features of this app:
 ---
 
 ###  Reports & Charts
-
 - [x] Total Leads Closed By Agents. x - Sales Agent, y - number of leads closed. (bar chart)
 - [x] Leads Status Distribution (pie chart)
 - [x] Leads in pipeline and leads closed(last Week) (Pie Chart)
@@ -97,7 +94,6 @@ Watch a walkthrough (5-7 minutes) of all the major features of this app:
 ---
 
 ###  Context Management (useContext)
-
 - [x] `LeadContext` – Add Leads, Delete and update Leads, filter query in backend with url query parameters, add and delete Comments.
 - [x] `AgentContext` – Manage sales agents - Add, Delete Sales Agent.
 - [x] `UIContext` –  loading, error and message.
@@ -122,43 +118,14 @@ Watch a walkthrough (5-7 minutes) of all the major features of this app:
 
 ---
 
-<!-- ##  Anvaya CRM – PRD Checklist
 
-This checklist outlines the essential features, modules, and workflows planned for the Anvaya CRM application.
+###  Stretch Goals / Future
+- [ ] Auth system (Login, Role-based access)
 
 ---
 
-### Core Modules
-
-- [x] Lead Management
-  - [x] Create new lead
-  - [x] Assign sales agent
-  - [x] Set lead status, source, tags, priority
-  - [x] Filter/sort leads
-  - [x] Update/delete lead
-- [x] Comments Section
-  - [x] Add comment to a lead
-  - [x] Display author & timestamp
-  - [x] delete comment
-- [x] Sales Agent Management
-  - [x] Create new agent
-  - [x] View all agents
-  - [x] Assign agents to leads
-- [x] Lead Views
-  - [x] Lead List View
-  - [x] Lead Details View
-  - [x] Lead Status View (grouped by status)
-  - [x] Sales Agent View (grouped by agent)
-
---- -->
-
 ## Contact
 For bugs or feature requrest, please reach out to donmonteiro@gmail.com
-
-###  Stretch Goals / Future
-
-- [ ] Auth system (Login, Role-based access)
-
 ---
 
 _This PRD checklist is a living document and will evolve with feature updates and feedback._
