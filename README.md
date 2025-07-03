@@ -116,7 +116,7 @@ Watch a walkthrough 4 minute video of all the major features of this app:
 ---
 
 ## Contact
-For bugs or feature requrest, please reach out to donmonteiro@gmail.com
+For bugs or feature requrest, please reach out to donmonteiro16@gmail.com
 ---
 
 _This PRD checklist is a living document and will evolve with feature updates and feedback._
