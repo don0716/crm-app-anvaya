@@ -28,7 +28,7 @@ npm run dev  # or `npm start` / `yarn dev`
 ---
 
 ## Demo Video
-Watch a walkthrough 4 minute video of all the major features of this app:
+A 4 minute walkthrough video of all the major features of this app:
 [Loom Video Link](https://www.loom.com/share/226bb549a10a486b9436facb470779ab?sid=04e5c13a-0adc-4d30-bf74-1fdf79d236ab)
 
 ---
