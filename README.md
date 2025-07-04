@@ -115,6 +115,12 @@ Watch a walkthrough 4 minute video of all the major features of this app:
 
 ---
 
+## API REFERENCE
+[Github Link to API Reference readme of CRM BACKEND](https://github.com/don0716/crm-app-backend/blob/main/README.md)
+[CRM BACKEND CODE](https://github.com/don0716/crm-app-backend/tree/main)
+
+---
+
 ## Contact
 For bugs or feature requrest, please reach out to donmonteiro16@gmail.com
 ---
